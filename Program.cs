@@ -70,47 +70,29 @@ class Program
             PerformTest(jobName);
             return;
         }
-        string startParam = ArgSharpClass.GetValue<string>("--start");
+        string excludeParam = ArgSharpClass.GetValue<string>("--exclude");
 
         // use comma to separate multiple job names, or just space (handled in loop)
-        string[] startJobs = startParam.Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        string[] excludeJobs = excludeParam.Split([',', ' '], StringSplitOptions.RemoveEmptyEntries);
 
-        if (startJobs.Length == 0)
+        foreach (var kvp in jobs)
         {
-            foreach (var kvp in jobs)
-            {
-                var name = kvp.CmdName;
+            var name = kvp.CmdName;
 
-                if (!useJoke && kvp.IsJokeType)
-                    continue;
+            if (!useJoke && kvp.IsJokeType)
+                continue;
 
-                tests.Add(name);
-            }
+            tests.Add(name);
         }
-        else
+
+        if (excludeJobs.Length > 0)
         {
-            for (int i = 0; i < startJobs.Length; i++)
+            for (int i = 0; i < excludeJobs.Length; i++)
             {
-                string name = startJobs[i];
-                var job = jobs.SingleOrDefault(a => a.CmdName == name);
-
-                if (job is null)
-                {
-                    Console.WriteLine($"[!]: Unknown job '{name}'");
-                    Environment.Exit(1);
-                    return;
-                }
-
-                // Skip joke jobs if disabled
-                if (!useJoke && job.IsJokeType)
-                {
-                    Console.WriteLine($"[!]: '{name}' is a joke job and is disabled.");
-                }
-                else
-                {
-                    tests.Add(name);
-                }
+                string name = excludeJobs[i];
+                tests.Remove(name);
             }
+
         }
 
         if (tests.Count == 0)
@@ -325,11 +307,11 @@ class Program
         ArgSharpClass.AddArgument<bool>(["--joke"], helpMsg: "Allow also to use joke type sort test jobs.", defaultValue: false);
         ArgSharpClass.AddArgument<string>(["-j"], "job name", helpMsg: "Performs only one sort job, the program will output as JSON (Should be use on last parameter)\n" +
                                               "To run joke-type, must include --joke before this parameter.");
-        ArgSharpClass.AddArgument<string>(["--start"], "", "Performs one or more sort test jobs. (Should be use on last parameter)\n" +
-                                                    "If the parameter value is not set, " +
-                                                    "all sort will be use (except joke type, must include --joke)\n\n" +
-                                                    "To specify multiple jobs, separate them with comma. (e.g. --start merge,sort)",
+        ArgSharpClass.AddArgument<string>(["--exclude"], "", "Excludes one or more sort test jobs.\n" +
+                                                    "To specify multiple jobs, separate them with comma. (e.g. --exclude merge,sort)",
                                                     "");
+
+
         ArgSharpClass.OnHelpInvoked = new Action(() =>
         {
             PrintHelp();

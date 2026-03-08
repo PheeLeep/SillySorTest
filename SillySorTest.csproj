@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="help.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="PheeLeep.ArgSharp" Version="2.2.0" />
     <PackageReference Include="Spectre.Console" Version="0.54.0" />
   </ItemGroup>

@@ -72,8 +72,7 @@ class Program
         }
         string excludeParam = ArgSharpClass.GetValue<string>("--exclude");
 
-        // use comma to separate multiple job names, or just space (handled in loop)
-        string[] excludeJobs = excludeParam.Split([',', ' '], StringSplitOptions.RemoveEmptyEntries);
+        string[] excludeJobs = excludeParam.Split(",", StringSplitOptions.RemoveEmptyEntries);
 
         foreach (var kvp in jobs)
         {
@@ -300,7 +299,8 @@ class Program
     {
 
         ArgSharpClass.ArgumentZeroAction = ArgSharpClass.ArgZeroAction.ShowHelp;
-        ArgSharpClass.Init(AppDomain.CurrentDomain.FriendlyName);
+        ArgSharpClass.Init(AppDomain.CurrentDomain.FriendlyName, "SillySorTest");
+
         ArgSharpClass.AddArgument<bool>(["-p"], helpMsg: "Run test as parallel.");
         ArgSharpClass.AddArgument<bool>(["--precise"], helpMsg: "Use Secure RNG instead of pseudo RNG.\n(true random but can increase the memory usage, depending on the array size set)", defaultValue: false);
         ArgSharpClass.AddArgument<int>(["-s"], helpMsg: "Setting the size of array to use. (Default: 1024)", defaultValue: 1024);

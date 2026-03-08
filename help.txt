@@ -1,0 +1,28 @@
+======================================
+            SillySorTest
+            Author: PheeLeep
+======================================
+
+Performs sort test(s)
+
+Usage:
+    -h                      Show this help output.
+
+    -p                      Run test as parallel.
+
+    --precise               Use Secure RNG instead of pseudo RNG
+                            (true random but can increase the memory usage, depending on the array size set)
+
+    -s                      Setting the size of array to use. (Default: 1024)
+
+    --joke                  Allow also to use joke type sort test jobs.
+
+    -j  <Job Name>          Performs only one sort job, the program will output as JSON (Should be use on last parameter)
+                            To run joke-type, must include --joke before this parameter.
+
+    --start <Job Name(s)>   Performs one or more sort test jobs. (Should be use on last parameter)
+                            If the parameter value is not set, 
+                            all sort will be use (except joke type, must include --joke)
+
+Examples:
+    dotnet SillySorTest.dll -s 4096  --start

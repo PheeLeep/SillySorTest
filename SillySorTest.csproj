@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ILGPU" Version="1.5.3" />
     <PackageReference Include="PheeLeep.ArgSharp" Version="2.3.2" />
     <PackageReference Include="Spectre.Console" Version="0.57.2" />
   </ItemGroup>

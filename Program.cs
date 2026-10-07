@@ -42,7 +42,8 @@ class Program
         new RadixMSDSort(),
         new BogoSort(),
         new SleepSort(),
-        new HeapSort()
+        new HeapSort(),
+        new BitonicGpuSort()
     ];
 
     static async Task Main(string[] args)

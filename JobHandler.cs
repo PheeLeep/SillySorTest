@@ -32,8 +32,12 @@ public class JobHandler
                     Message = "Process is null"
                 };
             }
-            string json = await proc.StandardOutput.ReadToEndAsync();
+            string output = await proc.StandardOutput.ReadToEndAsync();
             await proc.WaitForExitAsync();
+
+            // ArgSharp may print the help text before the result, so only take the JSON line.
+            string json = output.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                                .LastOrDefault(l => l.StartsWith('{')) ?? output;
 
             try
             {

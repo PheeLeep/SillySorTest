@@ -1,10 +1,20 @@
 using System;
+using ArgSharp;
+using ArgSharp.Args;
 using Spectre.Console;
 
 namespace SillySorTest;
 
 public static class Miscellaneous
 {
+    // ArgSharp 2.3 removed ArgSharpClass.GetValue, so look up root-level values from the arg stores.
+    public static T GetArgValue<T>(string name)
+    {
+        var store = ArgSharpClass.GetArgStoreValues().FirstOrDefault(a => a.Parameters.Contains(name))
+            ?? throw new ArgumentException($"Argument '{name}' was not registered.", nameof(name));
+        return ((ArgStore<T>)store).TypedValue;
+    }
+
     public static void PrintErrorTable(List<SortResultClass> errors)
     {
         if (errors.Count > 0)

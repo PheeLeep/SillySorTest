@@ -52,10 +52,10 @@ class Program
 
         List<string> tests = new List<string>();
 
-        parallelMode = ArgSharpClass.GetValue<bool>("-p");
-        usePreciseRNG = ArgSharpClass.GetValue<bool>("--precise");
-        useJoke = ArgSharpClass.GetValue<bool>("--joke");
-        sortSize = ArgSharpClass.GetValue<int>("-s");
+        parallelMode = Miscellaneous.GetArgValue<bool>("-p");
+        usePreciseRNG = Miscellaneous.GetArgValue<bool>("--precise");
+        useJoke = Miscellaneous.GetArgValue<bool>("--joke");
+        sortSize = Miscellaneous.GetArgValue<int>("-s");
 
         if (sortSize < 1)
         {
@@ -64,13 +64,13 @@ class Program
             return;
         }
 
-        string jobName = ArgSharpClass.GetValue<string>("-j");
+        string jobName = Miscellaneous.GetArgValue<string>("-j");
         if (!string.IsNullOrEmpty(jobName))
         {
             PerformTest(jobName);
             return;
         }
-        string excludeParam = ArgSharpClass.GetValue<string>("--exclude");
+        string excludeParam = Miscellaneous.GetArgValue<string>("--exclude");
 
         string[] excludeJobs = excludeParam.Split(",", StringSplitOptions.RemoveEmptyEntries);
 

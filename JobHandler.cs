@@ -9,8 +9,8 @@ public class JobHandler
 {
     public async Task<SortResultClass> Run(string name)
     {
-        var useJoke = ArgSharpClass.GetValue<bool>("--joke");
-        var sortSize = ArgSharpClass.GetValue<int>("-s");
+        var useJoke = Miscellaneous.GetArgValue<bool>("--joke");
+        var sortSize = Miscellaneous.GetArgValue<int>("-s");
         
         var procInfo = new ProcessStartInfo
         {
